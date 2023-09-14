@@ -22,8 +22,8 @@ if(isset($_POST["price"])){
 if(isset($_POST["location"])){
     $location = $_POST["location"];
 }
-if(isset($_POST["bathroom"])){
-    $bathroom = md5($_POST["bathroom"]);
+if(isset($_POST["bathrooms"])){
+    $bathroom = $_POST["bathrooms"];
 }
 if(isset($_POST["bedrooms"])){
     $bedrooms = $_POST["bedrooms"];
@@ -35,7 +35,7 @@ if(isset($_POST["parking"])){
     $parking = $_POST["parking"];
 }
 if(isset($_POST["owner"])){
-    $owner = $_POST["owner"];
+    $owner =(int) $_POST["owner"];
 }
 if(isset($_POST["description"])){
     $description = $_POST["description"];
@@ -65,7 +65,9 @@ if(!empty($property) || !empty($price) ||  !empty($bedrooms) || !empty($duration
 }  
  
 else{
-    echo "All inputs are required";
+     $result["success"] =  "0";
+     $result["message"]  = "All inputs are required";  
+    echo json_encode($result);
 }
 
 // echo "Home  sweet home";
