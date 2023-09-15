@@ -41,8 +41,8 @@ if(isset($_POST["description"])){
     $description = $_POST["description"];
 }
 
-if(isset($_POST["cover_image"])){
-    $cover_image = $_POST["cover_image"];
+if(isset($_POST["photo"])){
+    $cover_image = $_POST["photo"];
 }
 
 if(!empty($property) || !empty($price) ||  !empty($bedrooms) || !empty($duration) || !empty($bathroom) || !empty($location)  || !empty($parking) || !empty($owner) || !empty($description) || !empty($cover_image)){
