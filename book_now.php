@@ -2,50 +2,49 @@
 <?php
 include('./connect.php');
 
-$firstname   = "";
- $lastname = "";
-  $phone = "";
-   $username = "" ;
-   $password = "";
-   $role = "";
+$property_id   = "12";
+$user_id = "12";
+$booking_status = "Pending" ;
+$owner_id = "15";
 
-if(isset($_POST["firstname"])){
-    $firstname = $_POST["firstname"];
-}
-if(isset($_POST["phone"])){
-    $phone = $_POST["phone"];
-}
-if(isset($_POST["lastname"])){
-    $lastname = $_POST["lastname"];
-}
-if(isset($_POST["password"])){
-    $password = md5($_POST["password"]);
-}
-if(isset($_POST["username"])){
-    $username = $_POST["username"];
-}
-if(isset($_POST["role"])){
-    $role = $_POST["role"];
+
+if(isset($_POST["property_id"])){
+    $property_id = $_POST["property_id"];
 }
 
-if(!empty($firstname) || !empty($phone) ||  !empty($username) || !empty($role) || !empty($password) || !empty($lastname)){
+if(isset($_POST["user_id"])){
+    $user_id = $_POST["user_id"];
+}
+
+if(isset($_POST["owner_id"])){
+    $owner_id = $_POST["owner_id"];
+}
+
+if(isset($_POST["booking_status"])){
+    $booking_status = $_POST["booking_status"];
+}
+
+
+if(!empty($fproperty_id) || !empty($booking_status) || !empty($user_id)){
   
-    $select_query = "SELECT * FROM users  WHERE username = '$username'";
-    $email_results = mysqli_query($conn, $select_query);
-    if(mysqli_num_rows($email_results) > 0){
-        $result['success']='0';
-            $result['message']='Email already exists! please try again';
-                echo json_encode($result);
-                mysqli_close($conn);
-    }
-    else {
-    $insert_query = "INSERT INTO users (firstname, lastname, username, phone, role,password)  VALUES('$firstname','$lastname' , '$username', '$phone', '$role', '$password')";
+
+    $insert_query = "INSERT INTO bookings (property_id, user_id, owner_id, booking_status)  VALUES('$property_id','$user_id', '$owner_id' , '$booking_status')";
     if(mysqli_query($conn, $insert_query)){
+
+        $update_query = "UPDATE properties SET status = 'Booked' WHERE property_id ='$property_id'";
+    if(mysqli_query($conn, $update_query)){
         $results["success"]= "1";
-        $results["message"] = "New account created succesfully";
+        $results["message"] = "New book placed succesfully";
          echo json_encode($results);
           mysqli_close($conn);
        }
+       else{
+        $result['success']='0';
+        $result['message']='Request failed  please try again';
+            echo json_encode($result);
+            mysqli_close($conn);
+       }
+    } 
        else {
             $result['success']='0';
             $result['message']='Request failed  please try again';
@@ -53,7 +52,7 @@ if(!empty($firstname) || !empty($phone) ||  !empty($username) || !empty($role) |
                 mysqli_close($conn);
        }
 }  
- }
+ 
 else{
     echo "All inputs are required";
 }
