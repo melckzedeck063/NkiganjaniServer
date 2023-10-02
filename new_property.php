@@ -12,6 +12,7 @@ $property   = "";
    $owner = "";
    $description="";
    $cover_image ="";
+   $status="";
 
 if(isset($_POST["property"])){
     $property = $_POST["property"];
@@ -44,10 +45,13 @@ if(isset($_POST["description"])){
 if(isset($_POST["photo"])){
     $cover_image = $_POST["photo"];
 }
+if(isset($_POST["status"])){
+    $status = $_POST["status"];
+}
 
 if(!empty($property) || !empty($price) ||  !empty($bedrooms) || !empty($duration) || !empty($bathroom) || !empty($location)  || !empty($parking) || !empty($owner) || !empty($description) || !empty($cover_image)){
   
-    $insert_query = "INSERT INTO properties (property, location, price, bedrooms,bathrooms,parking,duration,photo,description, owner)  VALUES('$property','$location', '$price','$bedrooms', '$bathroom', '$parking', '$duration','$cover_image','$description', '$owner')";
+    $insert_query = "INSERT INTO properties (property, location, price, bedrooms,bathrooms,parking,duration,photo,description,status, owner)  VALUES('$property','$location', '$price','$bedrooms', '$bathroom', '$parking', '$duration','$cover_image','$description','$status', '$owner')";
     if(mysqli_query($conn, $insert_query)){
         $results["success"]= "1";
         $results["message"] = "New property registered succesfully";
